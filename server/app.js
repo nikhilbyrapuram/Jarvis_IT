@@ -1,9 +1,21 @@
 const express=require ("express")
-const app=express()
+const { connect } = require("mongoose")
+const connectDB = require("./config/db")
+const dotenv=require("dotenv")
+const courseRoute = require("./routes/courseRoutes")
+const authRoute = require("./routes/authRoute")
 
-app.get("/welcome", (req,res)=>{
-    res.send("Welcome back")
-})
+
+const app=express()
+app.use(express.json())
+dotenv.config()
+
+app.use("/api/auth", authRoute)
+app.use("/api/courses",courseRoute)
+
+
+
+connectDB()
 
 app.listen(3000, ()=>{
     console.log("listening to the PORT")
